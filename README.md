@@ -1,6 +1,6 @@
 # video_thumbnail
 
-This plugin generates thumbnail from video file or URL.  It returns image in memory or writes into a file.  It offers rich options to control the image format, resolution and quality.  Supports iOS and Android.
+This plugin generates thumbnail using FFmpegMediaMetadataRetriever from video file or URL.  It returns image in memory or writes into a file.  It offers rich options to control the image format, resolution and quality.  Supports iOS and Android.
 
   [![pub ver](https://img.shields.io/badge/pub-v0.4.3-blue)](https://pub.dev/packages/video_thumbnail)
   [![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/justsoft/)

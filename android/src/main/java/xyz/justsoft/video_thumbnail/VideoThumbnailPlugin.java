@@ -1,25 +1,21 @@
 package xyz.justsoft.video_thumbnail;
-
 import android.graphics.Bitmap;
-import android.media.MediaMetadataRetriever;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
-
 import androidx.annotation.NonNull;
-
 import java.io.ByteArrayOutputStream;
 import java.io.FileOutputStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
 import io.flutter.plugin.common.MethodChannel.Result;
+import wseemann.media.FFmpegMediaMetadataRetriever;
 
 /**
  * VideoThumbnailPlugin
@@ -27,7 +23,6 @@ import io.flutter.plugin.common.MethodChannel.Result;
 public class VideoThumbnailPlugin implements FlutterPlugin, MethodCallHandler {
     private static String TAG = "ThumbnailPlugin";
     private static final int HIGH_QUALITY_MIN_VAL = 70;
-
     private ExecutorService executor;
     private MethodChannel channel;
 
@@ -193,7 +188,7 @@ public class VideoThumbnailPlugin implements FlutterPlugin, MethodCallHandler {
      */
     public static Bitmap createVideoThumbnail(final String video, int targetH, int targetW, int timeMs) {
         Bitmap bitmap = null;
-        MediaMetadataRetriever retriever = new MediaMetadataRetriever();
+        FFmpegMediaMetadataRetriever retriever = new FFmpegMediaMetadataRetriever();
         try {
             if (video.startsWith("/")) {
                 retriever.setDataSource(video);
@@ -206,7 +201,7 @@ public class VideoThumbnailPlugin implements FlutterPlugin, MethodCallHandler {
             if (targetH != 0 || targetW != 0) {
                 if (android.os.Build.VERSION.SDK_INT >= 27 && targetH != 0 && targetW != 0) {
                     // API Level 27
-                    bitmap = retriever.getScaledFrameAtTime(timeMs * 1000, MediaMetadataRetriever.OPTION_CLOSEST_SYNC, targetW, targetH);
+                    bitmap = retriever.getScaledFrameAtTime(timeMs * 1000, FFmpegMediaMetadataRetriever.OPTION_CLOSEST_SYNC, targetW, targetH);
                 } else {
                     bitmap = retriever.getFrameAtTime(timeMs * 1000);
                     if (bitmap != null) {
