@@ -26,6 +26,9 @@ apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
 android {
+    packagingOptions {
+        pickFirst 'lib/**/*.so'
+    }
     compileSdkVersion 30
 
     sourceSets {
@@ -48,6 +51,12 @@ android {
             signingConfig signingConfigs.debug
         }
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    ndkVersion '20.0.5594570'
+    buildToolsVersion '29.0.2'
 }
 
 flutter {
@@ -56,4 +65,5 @@ flutter {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'com.arthenica:mobile-ffmpeg-full-gpl:4.4.LTS'
 }
